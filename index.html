@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Margen">
+<meta name="theme-color" content="#F7F4F5">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="icon" href="icon-192.png">
+<style>html{color-scheme:light dark}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Margen Retail Moda</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700&family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root{
+  --bg:#F7F4F5; --surface:#FFFFFF; --surface-2:#F2EDEF; --surface-3:#EAE2E6;
+  --line:#E4DADE; --line-2:#CFC2C8;
+  --text:#221A1E; --text-2:#6E5E65; --text-3:#9B8B92;
+  --accent:#A81F52; --accent-2:#8E1A46; --accent-soft:#FBE8F0;
+  --ok:#0F7A54; --ok-soft:#E4F3EC; --ok-line:#9FD7C1;
+  --warn:#96600A; --warn-soft:#FAF0DA; --warn-line:#E3C388;
+  --bad:#B3261E; --bad-soft:#FBE7E5; --bad-line:#EFB0AB;
+  --shadow:0 1px 2px rgba(34,26,30,.05),0 10px 28px -18px rgba(34,26,30,.35);
+  --r:14px;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --sans:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --disp:"Archivo","IBM Plex Sans",-apple-system,sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#161215; --surface:#1F191C; --surface-2:#282124; --surface-3:#31282D;
+    --line:#382E34; --line-2:#4C4048;
+    --text:#F4EEF1; --text-2:#B9A8B0; --text-3:#8B7A82;
+    --accent:#F2679B; --accent-2:#F79BBC; --accent-soft:#3B1B2A;
+    --ok:#52C79D; --ok-soft:#14322A; --ok-line:#2C6A55;
+    --warn:#E3A84F; --warn-soft:#332711; --warn-line:#6E5424;
+    --bad:#F58279; --bad-soft:#3A1F1D; --bad-line:#763934;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 28px -18px rgba(0,0,0,.8);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#161215; --surface:#1F191C; --surface-2:#282124; --surface-3:#31282D;
+  --line:#382E34; --line-2:#4C4048;
+  --text:#F4EEF1; --text-2:#B9A8B0; --text-3:#8B7A82;
+  --accent:#F2679B; --accent-2:#F79BBC; --accent-soft:#3B1B2A;
+  --ok:#52C79D; --ok-soft:#14322A; --ok-line:#2C6A55;
+  --warn:#E3A84F; --warn-soft:#332711; --warn-line:#6E5424;
+  --bad:#F58279; --bad-soft:#3A1F1D; --bad-line:#763934;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 28px -18px rgba(0,0,0,.8);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);font-size:15px;line-height:1.45;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1120px;margin:0 auto;padding-inline:16px;padding-block:0 56px}
+h1,h2,h3{font-family:var(--disp);margin:0;text-wrap:balance;letter-spacing:-.01em}
+
+/* header */
+header.top{padding-block:26px 14px}
+.brandrow{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+h1{font-size:23px;font-weight:700}
+.sub{color:var(--text-2);font-size:13px}
+.kicker{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);font-weight:600;font-family:var(--sans)}
+
+/* tabs */
+.tabsbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);padding-block:8px 10px;margin-bottom:18px;border-bottom:1px solid var(--line)}
+.tabs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
+.tabs::-webkit-scrollbar{display:none}
+.tab-btn{scroll-snap-align:start;flex:0 0 auto;appearance:none;border:1px solid transparent;background:transparent;color:var(--text-2);font:inherit;font-weight:500;font-size:13.5px;padding:9px 14px;border-radius:10px;cursor:pointer;white-space:nowrap;transition:background .15s,color .15s}
+.tab-btn:hover{background:var(--surface-2);color:var(--text)}
+.tab-btn[aria-selected="true"]{background:var(--surface);color:var(--text);border-color:var(--line);box-shadow:var(--shadow);font-weight:600}
+.tab-btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* layout */
+.cols{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:18px;align-items:start}
+.cols.wide{grid-template-columns:minmax(0,1fr)}
+.stack{display:flex;flex-direction:column;gap:18px;min-width:0}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px;min-width:0}
+.panel.lift{box-shadow:var(--shadow)}
+.panel-t{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-3);font-weight:600;font-family:var(--sans);margin-bottom:14px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+
+/* fields */
+.fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.f{display:flex;flex-direction:column;gap:5px;min-width:0}
+.f>span{font-size:12.5px;color:var(--text-2);font-weight:500}
+.inp{display:flex;align-items:center;gap:0;background:var(--surface-2);border:1px solid var(--line);border-radius:9px;padding:0 10px;transition:border-color .15s,box-shadow .15s}
+.inp:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.inp i{font-style:normal;color:var(--text-3);font-family:var(--mono);font-size:13px;font-weight:500}
+.inp input,.inp select{flex:1;min-width:0;background:transparent;border:0;outline:0;color:var(--text);font-family:var(--mono);font-weight:500;font-size:16px;padding:11px 6px;font-variant-numeric:tabular-nums}
+.inp select{font-family:var(--sans);cursor:pointer}
+.inp.bad{border-color:var(--bad)}
+.hint{font-size:11.5px;color:var(--text-3)}
+
+/* derived line */
+.derived{margin-top:14px;padding-top:12px;border-top:1px dashed var(--line-2);display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.derived span{font-size:12.5px;color:var(--text-2);font-weight:500}
+.derived strong{font-family:var(--mono);font-size:19px;font-weight:600;font-variant-numeric:tabular-nums}
+
+/* result rows */
+.rows{display:flex;flex-direction:column}
+.row{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:9px 0;border-bottom:1px solid var(--line)}
+.row:last-child{border-bottom:0}
+.row dt{font-size:13.5px;color:var(--text-2)}
+.row dd{margin:0;font-family:var(--mono);font-size:14.5px;font-weight:500;font-variant-numeric:tabular-nums;text-align:right}
+.row.em{padding:12px 0}
+.row.em dt{color:var(--text);font-weight:600}
+.row.em dd{font-size:18px;font-weight:600}
+.row.sep{border-top:2px solid var(--line-2);margin-top:4px}
+dl{margin:0}
+
+/* headline metric */
+.metric{border-radius:var(--r);padding:20px;border:1px solid var(--line);background:var(--surface-2)}
+.metric .lab{font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:var(--text-2)}
+.metric .val{font-family:var(--mono);font-size:clamp(34px,8vw,48px);font-weight:600;line-height:1.05;margin-top:8px;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.metric .note{font-size:12.5px;color:var(--text-2);margin-top:8px;max-width:46ch}
+.metric.hero{background:var(--accent-soft);border-color:var(--accent);border-width:1px}
+.metric.hero .lab,.metric.hero .val{color:var(--accent-2)}
+.metric.hero .val{font-size:clamp(40px,11vw,62px)}
+
+/* state pill */
+.pill{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:600;padding:5px 11px;border-radius:999px;border:1px solid var(--line-2);background:var(--surface-2);color:var(--text-2)}
+.pill::before{content:"";width:8px;height:8px;border-radius:50%;background:currentColor}
+.pill.ok{background:var(--ok-soft);border-color:var(--ok-line);color:var(--ok)}
+.pill.warn{background:var(--warn-soft);border-color:var(--warn-line);color:var(--warn)}
+.pill.bad{background:var(--bad-soft);border-color:var(--bad-line);color:var(--bad)}
+
+/* table */
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:520px}
+th,td{text-align:right;padding:11px 14px;font-family:var(--mono);font-size:14px;font-variant-numeric:tabular-nums;border-bottom:1px solid var(--line)}
+th{font-family:var(--sans);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);font-weight:600;background:var(--surface-2);position:sticky;top:0}
+th:first-child,td:first-child{text-align:left}
+tbody tr:last-child td{border-bottom:0}
+td.state{text-align:left}
+tr.r-ok td:first-child{box-shadow:inset 3px 0 0 var(--ok)}
+tr.r-warn td:first-child{box-shadow:inset 3px 0 0 var(--warn)}
+tr.r-bad td:first-child{box-shadow:inset 3px 0 0 var(--bad)}
+tr.r-bad{background:var(--bad-soft)}
+tr.r-warn{background:var(--warn-soft)}
+.mini{font-family:var(--sans);font-size:11.5px;font-weight:600;padding:2px 8px;border-radius:999px;display:inline-block}
+.mini.ok{background:var(--ok-soft);color:var(--ok);border:1px solid var(--ok-line)}
+.mini.warn{background:var(--warn-soft);color:var(--warn);border:1px solid var(--warn-line)}
+.mini.bad{background:var(--bad-soft);color:var(--bad);border:1px solid var(--bad-line)}
+
+/* compare bars */
+.cmp{display:flex;flex-direction:column;gap:10px;margin-top:4px}
+.cmp .c{display:grid;grid-template-columns:130px 1fr 68px;gap:10px;align-items:center}
+.cmp .c>span:first-child{font-size:12.5px;color:var(--text-2)}
+.bar{height:9px;border-radius:999px;background:var(--surface-3);overflow:hidden}
+.bar>div{height:100%;border-radius:999px;background:var(--accent);transition:width .25s ease}
+.bar.g>div{background:var(--ok)}
+.bar.r>div{background:var(--bad)}
+.cmp .c>b{font-family:var(--mono);font-size:13.5px;text-align:right;font-weight:600;font-variant-numeric:tabular-nums}
+
+/* buttons */
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+button.btn{appearance:none;font:inherit;font-size:14px;font-weight:600;padding:12px 16px;min-height:44px;border-radius:9px;border:1px solid var(--line-2);background:var(--surface);color:var(--text);cursor:pointer;transition:background .15s,border-color .15s}
+button.btn:hover{background:var(--surface-2);border-color:var(--accent)}
+button.btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+button.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+:root[data-theme="dark"] button.btn.primary,html:not([data-theme="light"]) button.btn.primary{color:#fff}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) button.btn.primary{color:#20141A}}
+:root[data-theme="dark"] button.btn.primary{color:#20141A}
+button.btn.primary:hover{filter:brightness(1.06)}
+.warnbox{margin-top:12px;padding:10px 12px;border-radius:10px;background:var(--bad-soft);border:1px solid var(--bad-line);color:var(--bad);font-size:12.5px}
+footer{margin-top:32px;color:var(--text-3);font-size:12px;border-top:1px solid var(--line);padding-top:14px}
+footer code{font-family:var(--mono);color:var(--text-2)}
+.toast{position:fixed;left:50%;transform:translateX(-50%) translateY(20px);bottom:calc(18px + env(safe-area-inset-bottom,0px));background:var(--text);color:var(--bg);padding:10px 16px;border-radius:999px;font-size:13px;font-weight:500;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:50}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* ---- móvil: la tabla de descuentos se convierte en tarjetas ---- */
+@media (max-width:560px){
+  .tablewrap{border:0;background:transparent;overflow:visible}
+  table{min-width:0;width:100%}
+  thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  tbody tr{display:grid;grid-template-columns:1fr auto;gap:2px 10px;background:var(--surface);border:1px solid var(--line);border-left-width:4px;border-radius:12px;padding:12px 14px;margin-bottom:10px}
+  tbody tr.r-ok{border-left-color:var(--ok)}
+  tbody tr.r-warn{border-left-color:var(--warn)}
+  tbody tr.r-bad{border-left-color:var(--bad)}
+  tbody td{display:flex;justify-content:space-between;align-items:baseline;gap:12px;border:0;padding:3px 0;text-align:right}
+  tbody td:first-child{grid-column:1/-1;box-shadow:none!important;font-size:17px;padding-bottom:6px;border-bottom:1px solid var(--line);margin-bottom:4px}
+  tbody td::before{content:attr(data-l);font-family:var(--sans);font-size:12px;color:var(--text-2);text-align:left;font-weight:500}
+  tbody td:first-child::before{content:"Descuento"}
+  tbody td.state{grid-column:1/-1;justify-content:flex-start}
+  tbody td.state::before{content:none}
+  .cmp .c{grid-template-columns:1fr auto;gap:4px 10px}
+  .cmp .c .bar{grid-column:1/-1;order:3}
+  .metric{padding:16px}
+  .panel{padding:15px}
+  .wrap{padding-block:0 40px}
+  h1{font-size:20px}
+}
+@media (max-width:820px){.cols{grid-template-columns:minmax(0,1fr)}.cmp .c{grid-template-columns:104px 1fr 62px}}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+<header class="top">
+  <div class="kicker">Buying &amp; Merchandising · USD</div>
+  <div class="brandrow">
+    <h1>Costos, precio y margen</h1>
+    <span class="sub">Margen bruto siempre sobre precio sin IVA · Costo final incluye importación</span>
+  </div>
+</header>
+
+<div class="tabsbar">
+  <div class="tabs" role="tablist">
+    <button class="tab-btn" role="tab" id="t1" aria-controls="p1" aria-selected="true">📊 Analizar prenda</button>
+    <button class="tab-btn" role="tab" id="t2" aria-controls="p2" aria-selected="false">🎯 Precio objetivo</button>
+    <button class="tab-btn" role="tab" id="t3" aria-controls="p3" aria-selected="false">🏷️ Descuentos</button>
+    <button class="tab-btn" role="tab" id="t4" aria-controls="p4" aria-selected="false">🤝 Negociar costo</button>
+  </div>
+</div>
+
+<!-- ===== TAB 1 ===== -->
+<section id="p1" role="tabpanel" aria-labelledby="t1">
+ <div class="cols">
+  <div class="stack">
+   <div class="panel">
+    <h2 class="panel-t">Costos</h2>
+    <div class="fields">
+      <label class="f"><span>Costo de compra</span><div class="inp"><i>$</i><input id="a_costo" inputmode="decimal" value="10"></div></label>
+      <label class="f"><span>% Importación</span><div class="inp"><input id="a_imp" inputmode="decimal" value="20"><i>%</i></div></label>
+    </div>
+    <div class="derived"><span>Costo final (con importación)</span><strong id="a_cf">—</strong></div>
+   </div>
+   <div class="panel">
+    <h2 class="panel-t">Precio de venta</h2>
+    <div class="fields">
+      <label class="f"><span>Precio Full</span><div class="inp"><i>$</i><input id="a_full" inputmode="decimal" value="39.99"></div></label>
+      <label class="f"><span>% Descuento</span><div class="inp"><input id="a_desc" inputmode="decimal" value="40"><i>%</i></div></label>
+      <label class="f"><span>IVA</span><div class="inp"><input id="a_iva" inputmode="decimal" value="15"><i>%</i></div></label>
+    </div>
+    <div class="derived"><span>Precio final cliente (con IVA)</span><strong id="a_pc">—</strong></div>
+   </div>
+  </div>
+  <div class="panel lift">
+   <h2 class="panel-t">Rentabilidad <span class="pill" id="a_pill">—</span></h2>
+   <div class="metric"><div class="lab">Margen bruto</div><div class="val" id="a_mpct">—</div><div class="note" id="a_note">&nbsp;</div></div>
+   <dl class="rows" style="margin-top:14px">
+     <div class="row"><dt>Costo de compra</dt><dd id="a_r0">—</dd></div>
+     <div class="row"><dt>Costo final</dt><dd id="a_r1">—</dd></div>
+     <div class="row"><dt>Precio Full</dt><dd id="a_r2">—</dd></div>
+     <div class="row"><dt>Descuento</dt><dd id="a_r3">—</dd></div>
+     <div class="row"><dt>Precio final cliente</dt><dd id="a_r4">—</dd></div>
+     <div class="row"><dt>Precio sin IVA</dt><dd id="a_r5">—</dd></div>
+     <div class="row em sep"><dt>Margen bruto $</dt><dd id="a_r6">—</dd></div>
+     <div class="row em"><dt>Margen bruto %</dt><dd id="a_r7">—</dd></div>
+     <div class="row"><dt>Markup sobre costo (referencia)</dt><dd id="a_r8">—</dd></div>
+   </dl>
+   <div class="actions">
+     <button class="btn primary" data-copy="1">Copiar resultados</button>
+     <button class="btn" data-clear="1">Limpiar</button>
+   </div>
+  </div>
+ </div>
+</section>
+
+<!-- ===== TAB 2 ===== -->
+<section id="p2" role="tabpanel" aria-labelledby="t2" hidden>
+ <div class="cols">
+  <div class="stack">
+   <div class="panel">
+    <h2 class="panel-t">Costos</h2>
+    <div class="fields">
+      <label class="f"><span>Costo de compra</span><div class="inp"><i>$</i><input id="b_costo" inputmode="decimal" value="10"></div></label>
+      <label class="f"><span>% Importación</span><div class="inp"><input id="b_imp" inputmode="decimal" value="20"><i>%</i></div></label>
+    </div>
+    <div class="derived"><span>Costo final</span><strong id="b_cf">—</strong></div>
+   </div>
+   <div class="panel">
+    <h2 class="panel-t">Objetivo</h2>
+    <div class="fields">
+      <label class="f"><span>Margen bruto objetivo</span><div class="inp"><input id="b_marg" inputmode="decimal" value="60"><i>%</i></div></label>
+      <label class="f"><span>% Descuento a aplicar</span><div class="inp"><input id="b_desc" inputmode="decimal" value="40"><i>%</i></div></label>
+      <label class="f"><span>IVA</span><div class="inp"><input id="b_iva" inputmode="decimal" value="15"><i>%</i></div></label>
+    </div>
+    <label class="f" style="margin-top:12px"><span>Redondeo del Precio Full</span>
+      <div class="inp"><select id="b_round">
+        <option value="none">Sin redondeo</option>
+        <option value="99" selected>Terminación .99 (hacia arriba)</option>
+        <option value="00">Terminación .00 (entero más cercano)</option>
+        <option value="up">Redondear hacia arriba (entero superior)</option>
+      </select></div>
+    </label>
+    <div class="hint" style="margin-top:8px">Tras redondear, todos los indicadores se recalculan con el Precio Full real.</div>
+   </div>
+  </div>
+  <div class="panel lift">
+   <h2 class="panel-t">Precio requerido <span class="pill" id="b_pill">—</span></h2>
+   <div class="metric hero"><div class="lab">Precio Full necesario</div><div class="val" id="b_full">—</div><div class="note" id="b_note">&nbsp;</div></div>
+   <dl class="rows" style="margin-top:14px">
+     <div class="row"><dt>Costo final</dt><dd id="b_r0">—</dd></div>
+     <div class="row"><dt>Margen objetivo</dt><dd id="b_r1">—</dd></div>
+     <div class="row"><dt>Precio de venta sin IVA requerido</dt><dd id="b_r2">—</dd></div>
+     <div class="row"><dt>Precio de venta con IVA</dt><dd id="b_r3">—</dd></div>
+     <div class="row"><dt>Descuento</dt><dd id="b_r4">—</dd></div>
+     <div class="row"><dt>Precio Full teórico (sin redondeo)</dt><dd id="b_r5">—</dd></div>
+     <div class="row em sep"><dt>Precio Full necesario</dt><dd id="b_r6">—</dd></div>
+     <div class="row"><dt>Precio final cliente</dt><dd id="b_r7">—</dd></div>
+     <div class="row"><dt>Precio sin IVA resultante</dt><dd id="b_r8">—</dd></div>
+     <div class="row em"><dt>Margen bruto resultante</dt><dd id="b_r9">—</dd></div>
+     <div class="row"><dt>Margen bruto $ resultante</dt><dd id="b_r10">—</dd></div>
+   </dl>
+   <div id="b_warn"></div>
+   <div class="actions">
+     <button class="btn primary" data-copy="2">Copiar resultados</button>
+     <button class="btn" data-clear="2">Limpiar</button>
+   </div>
+  </div>
+ </div>
+</section>
+
+<!-- ===== TAB 3 ===== -->
+<section id="p3" role="tabpanel" aria-labelledby="t3" hidden>
+ <div class="cols wide">
+  <div class="panel">
+   <h2 class="panel-t">Prenda a simular</h2>
+   <div class="fields">
+     <label class="f"><span>Costo de compra</span><div class="inp"><i>$</i><input id="c_costo" inputmode="decimal" value="10"></div></label>
+     <label class="f"><span>% Importación</span><div class="inp"><input id="c_imp" inputmode="decimal" value="20"><i>%</i></div></label>
+     <label class="f"><span>Precio Full</span><div class="inp"><i>$</i><input id="c_full" inputmode="decimal" value="39.99"></div></label>
+     <label class="f"><span>IVA</span><div class="inp"><input id="c_iva" inputmode="decimal" value="15"><i>%</i></div></label>
+     <label class="f"><span>Margen mínimo aceptable</span><div class="inp"><input id="c_min" inputmode="decimal" value="20"><i>%</i></div></label>
+   </div>
+   <div class="derived"><span>Costo final</span><strong id="c_cf">—</strong></div>
+  </div>
+ </div>
+ <div class="panel lift" style="margin-top:18px">
+  <h2 class="panel-t">Escalera de descuento <span id="c_summary" class="pill">—</span></h2>
+  <div class="tablewrap">
+   <table>
+    <thead><tr><th>Descuento</th><th>Precio cliente</th><th>Precio sin IVA</th><th>Margen $</th><th>Margen %</th><th style="text-align:left">Estado</th></tr></thead>
+    <tbody id="c_body"></tbody>
+   </table>
+  </div>
+  <div class="hint" style="margin-top:10px">Verde: margen igual o superior al mínimo · Ámbar: por debajo del mínimo pero positivo · Rojo: margen negativo (se vende bajo costo).</div>
+  <div class="actions">
+    <button class="btn primary" data-copy="3">Copiar tabla</button>
+    <button class="btn" data-clear="3">Limpiar</button>
+  </div>
+ </div>
+</section>
+
+<!-- ===== TAB 4 ===== -->
+<section id="p4" role="tabpanel" aria-labelledby="t4" hidden>
+ <div class="cols">
+  <div class="stack">
+   <div class="panel">
+    <h2 class="panel-t">Precio de venta</h2>
+    <div class="fields">
+      <label class="f"><span>Precio Full</span><div class="inp"><i>$</i><input id="d_full" inputmode="decimal" value="39.99"></div></label>
+      <label class="f"><span>% Descuento</span><div class="inp"><input id="d_desc" inputmode="decimal" value="40"><i>%</i></div></label>
+      <label class="f"><span>IVA</span><div class="inp"><input id="d_iva" inputmode="decimal" value="15"><i>%</i></div></label>
+    </div>
+   </div>
+   <div class="panel">
+    <h2 class="panel-t">Objetivo</h2>
+    <div class="fields">
+      <label class="f"><span>Margen bruto objetivo</span><div class="inp"><input id="d_marg" inputmode="decimal" value="60"><i>%</i></div></label>
+      <label class="f"><span>% Importación</span><div class="inp"><input id="d_imp" inputmode="decimal" value="20"><i>%</i></div></label>
+    </div>
+   </div>
+   <div class="panel">
+    <h2 class="panel-t">Cotización del proveedor</h2>
+    <div class="fields">
+      <label class="f"><span>Costo actual cotizado</span><div class="inp"><i>$</i><input id="d_act" inputmode="decimal" value="8.20"></div></label>
+      <label class="f"><span>Umbral "no viable"</span><div class="inp"><input id="d_umbral" inputmode="decimal" value="20"><i>%</i></div></label>
+    </div>
+    <div class="hint" style="margin-top:8px">Si la reducción necesaria supera el umbral, la cotización se marca como no viable. Es solo una señal visual: no altera ningún cálculo.</div>
+   </div>
+  </div>
+
+  <div class="stack">
+   <div class="panel lift">
+    <div class="metric hero"><div class="lab">💰 Costo máximo a negociar</div><div class="val" id="d_max">—</div><div class="note" id="d_note">&nbsp;</div></div>
+    <dl class="rows" style="margin-top:14px">
+      <div class="row"><dt>Precio Full</dt><dd id="d_r0">—</dd></div>
+      <div class="row"><dt>Descuento</dt><dd id="d_r1">—</dd></div>
+      <div class="row"><dt>Precio final cliente</dt><dd id="d_r2">—</dd></div>
+      <div class="row"><dt>Precio sin IVA</dt><dd id="d_r3">—</dd></div>
+      <div class="row"><dt>Margen objetivo</dt><dd id="d_r4">—</dd></div>
+      <div class="row"><dt>Costo final máximo (ya importado)</dt><dd id="d_r5">—</dd></div>
+      <div class="row"><dt>% Importación</dt><dd id="d_r6">—</dd></div>
+      <div class="row em sep"><dt>Costo máximo de compra al proveedor</dt><dd id="d_r7">—</dd></div>
+    </dl>
+   </div>
+
+   <div class="panel lift">
+    <h2 class="panel-t">🤝 Resultado de negociación <span class="pill" id="d_pill">—</span></h2>
+    <div class="metric" id="d_gapbox">
+      <div class="lab">Necesitas reducir el costo en</div>
+      <div class="val" id="d_gap">—</div>
+      <div class="note" id="d_gapnote">&nbsp;</div>
+    </div>
+    <dl class="rows" style="margin-top:14px">
+      <div class="row"><dt>Costo actual proveedor</dt><dd id="d_n0">—</dd></div>
+      <div class="row"><dt>Costo máximo permitido</dt><dd id="d_n1">—</dd></div>
+      <div class="row"><dt>Diferencia</dt><dd id="d_n2">—</dd></div>
+      <div class="row"><dt>Reducción necesaria</dt><dd id="d_n3">—</dd></div>
+      <div class="row sep"><dt>Costo final con cotización actual</dt><dd id="d_n4">—</dd></div>
+      <div class="row em"><dt>Margen con el costo actual</dt><dd id="d_n5">—</dd></div>
+      <div class="row"><dt>Margen $ con el costo actual</dt><dd id="d_n6">—</dd></div>
+    </dl>
+    <div class="cmp" style="margin-top:16px">
+      <div class="c"><span>Margen objetivo</span><div class="bar"><div id="d_b1"></div></div><b id="d_v1">—</b></div>
+      <div class="c"><span>Con costo actual</span><div class="bar" id="d_b2w"><div id="d_b2"></div></div><b id="d_v2">—</b></div>
+      <div class="c"><span>Con costo negociado</span><div class="bar g"><div id="d_b3"></div></div><b id="d_v3">—</b></div>
+    </div>
+    <div class="actions">
+      <button class="btn primary" data-copy="4">Copiar resultados</button>
+      <button class="btn" data-clear="4">Limpiar</button>
+    </div>
+   </div>
+  </div>
+ </div>
+</section>
+
+<footer>
+  <strong style="color:var(--text-2)">Reglas de cálculo:</strong>
+  <code>Costo final = Costo compra × (1 + %Import.)</code> ·
+  <code>Precio cliente = Full × (1 − %Desc.)</code> ·
+  <code>Precio sin IVA = Precio cliente ÷ (1 + IVA)</code> ·
+  <code>Margen % = (Precio sin IVA − Costo final) ÷ Precio sin IVA</code>.
+  El IVA nunca entra en el margen. Margen bruto ≠ markup.
+</footer>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+"use strict";
+var $=function(id){return document.getElementById(id)};
+var DEFAULTS={a_costo:"10",a_imp:"20",a_full:"39.99",a_desc:"40",a_iva:"15",
+ b_costo:"10",b_imp:"20",b_marg:"60",b_desc:"40",b_iva:"15",b_round:"99",
+ c_costo:"10",c_imp:"20",c_full:"39.99",c_iva:"15",c_min:"20",
+ d_full:"39.99",d_desc:"40",d_iva:"15",d_marg:"60",d_imp:"20",d_act:"8.20",d_umbral:"20"};
+
+/* ---------- formato ---------- */
+function money(v){
+  if(v===null||v===undefined||!isFinite(v))return "—";
+  var neg=v<0, p=Math.abs(v).toFixed(2).split(".");
+  p[0]=p[0].replace(/\B(?=(\d{3})+(?!\d))/g,".");
+  return (neg?"−$":"$")+p[0]+","+p[1];
+}
+function pct(v){ if(!isFinite(v))return "—"; return (v<0?"−":"")+Math.abs(v).toFixed(2).replace(".",",")+"%"; }
+function num(id){
+  var el=$(id); if(!el) return 0;
+  var raw=String(el.value).replace(/[^0-9.,-]/g,"").replace(/\./g, function(m,off,s){return s.indexOf(",")>-1?"":"."});
+  raw=String(el.value).replace(/\s/g,"").replace(",",".").replace(/[^0-9.]/g,"");
+  var parts=raw.split("."); if(parts.length>2) raw=parts[0]+"."+parts.slice(1).join("");
+  var n=parseFloat(raw);
+  if(!isFinite(n)||n<0) n=0;
+  return n;
+}
+function set(id,txt){var e=$(id); if(e) e.textContent=txt;}
+
+/* ---------- núcleo de cálculo (compartido por las 4 pestañas) ---------- */
+function costoFinal(costo,impPct){ return costo*(1+impPct/100); }
+function precioCliente(full,descPct){ return full*(1-descPct/100); }
+function sinIVA(cliente,ivaPct){ return cliente/(1+ivaPct/100); }
+function margenPct(precioSinIVA,cf){ return precioSinIVA>0 ? (precioSinIVA-cf)/precioSinIVA*100 : NaN; }
+function redondear(v,modo){
+  if(!isFinite(v)||v<=0) return v;
+  if(modo==="99"){ var c=Math.floor(v)+0.99; if(c<v-1e-9) c+=1; return c; }
+  if(modo==="00") return Math.round(v);
+  if(modo==="up") return Math.ceil(v);
+  return Math.round(v*100)/100;
+}
+function estado(m,min){ if(!isFinite(m))return "na"; if(m<0)return "bad"; if(m<min)return "warn"; return "ok"; }
+
+/* ---------- pestaña 1 ---------- */
+function calcA(){
+  var costo=num("a_costo"), imp=num("a_imp"), full=num("a_full"), desc=Math.min(num("a_desc"),100), iva=num("a_iva");
+  var cf=costoFinal(costo,imp), pc=precioCliente(full,desc), psi=sinIVA(pc,iva);
+  var m$=psi-cf, mp=margenPct(psi,cf);
+  set("a_cf",money(cf)); set("a_pc",money(pc));
+  set("a_r0",money(costo)); set("a_r1",money(cf)); set("a_r2",money(full)); set("a_r3",pct(desc));
+  set("a_r4",money(pc)); set("a_r5",money(psi)); set("a_r6",money(m$)); set("a_r7",pct(mp));
+  set("a_r8", cf>0?pct((psi-cf)/cf*100):"—");
+  set("a_mpct", isFinite(mp)?pct(mp):"—");
+  var pill=$("a_pill"), note=$("a_note");
+  if(!isFinite(mp)){ pill.className="pill"; pill.textContent="Sin precio"; note.textContent="Ingresa un Precio Full mayor a cero."; }
+  else if(mp<0){ pill.className="pill bad"; pill.textContent="Margen negativo"; note.textContent="Se está vendiendo por debajo del costo final: pierdes "+money(Math.abs(m$))+" por prenda."; }
+  else if(mp<20){ pill.className="pill warn"; pill.textContent="Margen bajo"; note.textContent="Deja "+money(m$)+" por prenda sobre un costo final de "+money(cf)+"."; }
+  else { pill.className="pill ok"; pill.textContent="Margen sano"; note.textContent="Deja "+money(m$)+" por prenda sobre un costo final de "+money(cf)+"."; }
+}
+
+/* ---------- pestaña 2 ---------- */
+function calcB(){
+  var costo=num("b_costo"), imp=num("b_imp"), marg=num("b_marg"), desc=num("b_desc"), iva=num("b_iva");
+  var modo=$("b_round").value;
+  var cf=costoFinal(costo,imp);
+  set("b_cf",money(cf)); set("b_r0",money(cf)); set("b_r1",pct(marg)); set("b_r4",pct(desc)); set("b_r6","—");
+  var warn=$("b_warn"), pill=$("b_pill"), note=$("b_note");
+  warn.innerHTML="";
+  if(marg>=100||desc>=100){
+    ["b_r2","b_r3","b_r5","b_r7","b_r8","b_r9","b_r10"].forEach(function(i){set(i,"—")});
+    set("b_full","—"); pill.className="pill bad"; pill.textContent="Datos no válidos";
+    note.textContent="";
+    warn.innerHTML='<div class="warnbox">'+(marg>=100?"El margen objetivo debe ser menor a 100%: un margen de 100% exigiría un precio infinito.":"El descuento debe ser menor a 100%.")+'</div>';
+    return;
+  }
+  var reqSin=cf/(1-marg/100);
+  var reqCon=reqSin*(1+iva/100);
+  var fullTeorico=reqCon/(1-desc/100);
+  var fullFinal=redondear(fullTeorico,modo);
+  var pc=precioCliente(fullFinal,desc), psi=sinIVA(pc,iva), mp=margenPct(psi,cf), m$=psi-cf;
+  set("b_r2",money(reqSin)); set("b_r3",money(reqCon)); set("b_r5",money(fullTeorico));
+  set("b_r6",money(fullFinal)); set("b_r7",money(pc)); set("b_r8",money(psi));
+  set("b_r9",pct(mp)); set("b_r10",money(m$));
+  set("b_full",money(fullFinal));
+  var delta=mp-marg;
+  if(cf<=0){ pill.className="pill"; pill.textContent="Sin costo"; note.textContent="Ingresa el costo de compra."; return; }
+  if(delta>=-0.005){ pill.className="pill ok"; pill.textContent="Objetivo cubierto"; }
+  else { pill.className="pill warn"; pill.textContent="Redondeo resta margen"; }
+  note.textContent="Con este Precio Full, el cliente paga "+money(pc)+" tras "+pct(desc)+" de descuento y el margen real queda en "+pct(mp)+" ("+(delta>=0?"+":"−")+pct(Math.abs(delta)).replace("−","")+" vs objetivo).";
+}
+
+/* ---------- pestaña 3 ---------- */
+var DESCUENTOS=[35,40,50,60,70];
+function calcC(){
+  var costo=num("c_costo"), imp=num("c_imp"), full=num("c_full"), iva=num("c_iva"), min=num("c_min");
+  var cf=costoFinal(costo,imp);
+  set("c_cf",money(cf));
+  var body=$("c_body"); body.innerHTML="";
+  var mejor=null;
+  DESCUENTOS.forEach(function(d){
+    var pc=precioCliente(full,d), psi=sinIVA(pc,iva), m$=psi-cf, mp=margenPct(psi,cf);
+    var st=estado(mp,min);
+    if(st==="ok"&&mejor===null) mejor=d;
+    var tr=document.createElement("tr");
+    tr.className="r-"+(st==="na"?"":st);
+    var lab= st==="bad"?'<span class="mini bad">Pérdida</span>' : st==="warn"?'<span class="mini warn">Bajo mínimo</span>' : st==="ok"?'<span class="mini ok">OK</span>':"—";
+    tr.innerHTML="<td><strong>"+d+"%</strong></td>"+
+      "<td data-l='Precio cliente'>"+money(pc)+"</td>"+
+      "<td data-l='Precio sin IVA'>"+money(psi)+"</td>"+
+      "<td data-l='Margen $'>"+money(m$)+"</td>"+
+      "<td data-l='Margen %'>"+pct(mp)+"</td>"+
+      "<td class='state'>"+lab+"</td>";
+    body.appendChild(tr);
+  });
+  var s=$("c_summary");
+  // descuento máximo que aún respeta el mínimo
+  var maxOk=null;
+  DESCUENTOS.forEach(function(d){
+    var psi=sinIVA(precioCliente(full,d),iva);
+    if(margenPct(psi,cf)>=min) maxOk=d;
+  });
+  if(full<=0){ s.className="pill"; s.textContent="Ingresa el Precio Full"; }
+  else if(maxOk===null){ s.className="pill bad"; s.textContent="Ningún descuento alcanza el "+pct(min); }
+  else { s.className="pill ok"; s.textContent="Descuento máximo con margen ≥ "+pct(min)+": "+maxOk+"%"; }
+}
+
+/* ---------- pestaña 4 ---------- */
+function calcD(){
+  var full=num("d_full"), desc=Math.min(num("d_desc"),100), iva=num("d_iva"),
+      marg=num("d_marg"), imp=num("d_imp"), act=num("d_act"), umbral=num("d_umbral");
+  var pc=precioCliente(full,desc), psi=sinIVA(pc,iva);
+  var cfMax=psi*(1-marg/100);
+  var compraMax=cfMax/(1+imp/100);
+  set("d_r0",money(full)); set("d_r1",pct(desc)); set("d_r2",money(pc)); set("d_r3",money(psi));
+  set("d_r4",pct(marg)); set("d_r5",money(cfMax)); set("d_r6",pct(imp)); set("d_r7",money(compraMax));
+  set("d_max", marg>=100?"—":money(compraMax));
+  var note=$("d_note");
+  if(marg>=100){ note.textContent="El margen objetivo debe ser menor a 100%."; }
+  else { note.textContent="Máximo a pagar al proveedor para vender a "+money(full)+" con "+pct(desc)+" de descuento y conservar "+pct(marg)+" de margen (importación "+pct(imp)+")."; }
+
+  /* negociación */
+  var dif=act-compraMax;
+  var red= act>0 ? dif/act*100 : NaN;
+  var cfAct=costoFinal(act,imp);
+  var mAct=margenPct(psi,cfAct);
+  var mActD=psi-cfAct;
+  set("d_n0",money(act)); set("d_n1",money(compraMax));
+  set("d_n2",money(dif)); set("d_n3", isFinite(red)?pct(red):"—");
+  set("d_n4",money(cfAct)); set("d_n5",pct(mAct)); set("d_n6",money(mActD));
+  var pill=$("d_pill"), gap=$("d_gap"), gapnote=$("d_gapnote"), box=$("d_gapbox"), lab=box.querySelector(".lab");
+  if(act<=0){
+    pill.className="pill"; pill.textContent="Sin cotización";
+    lab.textContent="Cotización pendiente"; gap.textContent="—";
+    gapnote.textContent="Ingresa el costo cotizado por el proveedor para comparar.";
+  } else if(dif<=0.0001){
+    pill.className="pill ok"; pill.textContent="Dentro del objetivo";
+    lab.textContent="Margen a favor";
+    gap.textContent=money(Math.abs(dif));
+    gapnote.textContent="La cotización está "+money(Math.abs(dif))+" por debajo del máximo: puedes cerrar. Margen resultante "+pct(mAct)+".";
+  } else if(isFinite(red)&&red>umbral){
+    pill.className="pill bad"; pill.textContent="No viable";
+    lab.textContent="Necesitas reducir el costo en";
+    gap.textContent=money(dif)+"  ("+pct(red)+")";
+    gapnote.textContent="La reducción exigida supera tu umbral de "+pct(umbral)+". Revisa precio, descuento o margen objetivo antes de negociar.";
+  } else {
+    pill.className="pill warn"; pill.textContent="Requiere negociación";
+    lab.textContent="Necesitas reducir el costo en";
+    gap.textContent=money(dif)+"  ("+pct(red)+")";
+    gapnote.textContent="Objetivo de negociación: bajar de "+money(act)+" a "+money(compraMax)+" por prenda.";
+  }
+  /* barras comparativas */
+  var esc=function(v){ return Math.max(0,Math.min(100,isFinite(v)?v:0))+"%"; };
+  $("d_b1").style.width=esc(marg); set("d_v1",pct(marg));
+  $("d_b2").style.width=esc(mAct); set("d_v2", act>0?pct(mAct):"—");
+  $("d_b2w").className="bar"+(isFinite(mAct)&&mAct<0?" r":(isFinite(mAct)&&mAct>=marg?" g":""));
+  $("d_b3").style.width=esc(marg); set("d_v3", marg>=100?"—":pct(marg));
+}
+
+/* ---------- copiar ---------- */
+function lines(arr){ return arr.join("\n"); }
+function copyText(t){
+  var done=function(){ toast("Resultados copiados"); };
+  if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(t).then(done,function(){fallback(t,done)}); }
+  else fallback(t,done);
+}
+function fallback(t,cb){
+  var ta=document.createElement("textarea"); ta.value=t; ta.style.position="fixed"; ta.style.opacity="0";
+  document.body.appendChild(ta); ta.select();
+  try{ document.execCommand("copy"); cb(); }catch(e){ toast("No se pudo copiar"); }
+  document.body.removeChild(ta);
+}
+var tt;
+function toast(m){ var e=$("toast"); e.textContent=m; e.classList.add("show"); clearTimeout(tt); tt=setTimeout(function(){e.classList.remove("show")},1900); }
+function txt(id){ var e=$(id); return e?e.textContent:"—"; }
+function build(tab){
+  if(tab==="1") return lines(["ANÁLISIS DE PRENDA",
+    "Costo de compra: "+txt("a_r0"),"% Importación: "+pct(num("a_imp")),"Costo final: "+txt("a_r1"),
+    "Precio Full: "+txt("a_r2"),"Descuento: "+txt("a_r3"),"IVA: "+pct(num("a_iva")),
+    "Precio final cliente: "+txt("a_r4"),"Precio sin IVA: "+txt("a_r5"),
+    "Margen bruto $: "+txt("a_r6"),"Margen bruto %: "+txt("a_r7")]);
+  if(tab==="2") return lines(["PRECIO OBJETIVO",
+    "Costo final: "+txt("b_r0"),"Margen objetivo: "+txt("b_r1"),
+    "Precio sin IVA requerido: "+txt("b_r2"),"Precio con IVA: "+txt("b_r3"),
+    "Descuento: "+txt("b_r4"),"Precio Full teórico: "+txt("b_r5"),
+    "PRECIO FULL NECESARIO: "+txt("b_r6"),
+    "Precio final cliente: "+txt("b_r7"),"Precio sin IVA resultante: "+txt("b_r8"),
+    "Margen bruto resultante: "+txt("b_r9")+" ("+txt("b_r10")+")"]);
+  if(tab==="3"){
+    var out=["SIMULADOR DE DESCUENTOS","Costo final: "+txt("c_cf")+"  |  Precio Full: "+money(num("c_full"))+"  |  IVA: "+pct(num("c_iva"))+"  |  Margen mínimo: "+pct(num("c_min")),
+      "Desc.\tCliente\tSin IVA\tMargen $\tMargen %"];
+    Array.prototype.forEach.call($("c_body").rows,function(r){
+      out.push([r.cells[0].textContent,r.cells[1].textContent,r.cells[2].textContent,r.cells[3].textContent,r.cells[4].textContent].join("\t"));
+    });
+    return lines(out);
+  }
+  return lines(["NEGOCIACIÓN DE COSTO",
+    "Precio Full: "+txt("d_r0"),"Descuento: "+txt("d_r1"),"Precio final cliente: "+txt("d_r2"),
+    "Precio sin IVA: "+txt("d_r3"),"Margen objetivo: "+txt("d_r4"),
+    "Costo final máximo: "+txt("d_r5"),"% Importación: "+txt("d_r6"),
+    "COSTO MÁXIMO A NEGOCIAR: "+txt("d_r7"),
+    "","Costo actual proveedor: "+txt("d_n0"),"Diferencia: "+txt("d_n2"),
+    "Reducción necesaria: "+txt("d_n3"),"Margen con costo actual: "+txt("d_n5")]);
+}
+
+
+/* ---------- móvil: pantalla completa al añadir a la pantalla de inicio ---------- */
+(function(){
+  function meta(n,c,prop){ var m=document.createElement("meta"); if(prop)m.setAttribute(prop,n); else m.name=n; m.content=c; document.head.appendChild(m); }
+  meta("apple-mobile-web-app-capable","yes");
+  meta("mobile-web-app-capable","yes");
+  meta("apple-mobile-web-app-status-bar-style","default");
+  meta("apple-mobile-web-app-title","Margen");
+  var dark=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;
+  meta("theme-color",dark?"#161215":"#F7F4F5");
+})();
+
+/* ---------- pestañas ---------- */
+var TABS=[["t1","p1"],["t2","p2"],["t3","p3"],["t4","p4"]];
+function show(i){
+  TABS.forEach(function(t,k){
+    $(t[0]).setAttribute("aria-selected",k===i?"true":"false");
+    $(t[1]).hidden=(k!==i);
+  });
+  try{localStorage.setItem("mrm_tab",String(i));}catch(e){}
+}
+TABS.forEach(function(t,i){ $(t[0]).addEventListener("click",function(){show(i)}); });
+
+/* ---------- estado ---------- */
+var IDS=Object.keys(DEFAULTS);
+function recalc(){ calcA(); calcB(); calcC(); calcD(); save(); }
+function save(){ try{ var o={}; IDS.forEach(function(id){o[id]=$(id).value}); localStorage.setItem("mrm_v1",JSON.stringify(o)); }catch(e){} }
+function load(){
+  try{
+    var raw=localStorage.getItem("mrm_v1"); if(raw){ var o=JSON.parse(raw); IDS.forEach(function(id){ if(typeof o[id]==="string") $(id).value=o[id]; }); }
+    var t=localStorage.getItem("mrm_tab"); if(t) show(parseInt(t,10)||0);
+  }catch(e){}
+}
+IDS.forEach(function(id){
+  var el=$(id);
+  if(el.tagName==="SELECT"){ el.addEventListener("change",recalc); return; }
+  el.addEventListener("input",function(){
+    var v=el.value.replace(/[^0-9.,]/g,"");
+    var f=v.replace(",","."); var p=f.split("."); if(p.length>2) f=p[0]+"."+p.slice(1).join("");
+    if(v!==el.value) el.value=v;
+    recalc();
+  });
+  el.addEventListener("blur",function(){
+    if(el.value==="") return;
+    var n=num(id); el.value=String(Math.round(n*100)/100); recalc();
+  });
+});
+document.addEventListener("click",function(e){
+  var b=e.target.closest?e.target.closest("button"):null; if(!b) return;
+  if(b.dataset.copy){ copyText(build(b.dataset.copy)); }
+  if(b.dataset.clear){
+    var tab=b.dataset.clear, pre={"1":"a_","2":"b_","3":"c_","4":"d_"}[tab];
+    IDS.forEach(function(id){ if(id.indexOf(pre)===0){ $(id).value = (id==="b_round")?"none": (id==="a_iva"||id==="b_iva"||id==="c_iva"||id==="d_iva")?"15":(id==="c_min")?"20":(id==="d_umbral")?"20":""; } });
+    if(pre==="b_") $("b_round").value="none";
+    recalc(); toast("Campos limpiados");
+  }
+});
+load(); recalc();
+})();
+</script>
+
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", function () {
+    navigator.serviceWorker.register("sw.js").catch(function () {});
+  });
+}
+</script>
+</body>
+</html>

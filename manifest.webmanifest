@@ -1,0 +1,17 @@
+{
+  "name": "Margen Retail Moda",
+  "short_name": "Margen",
+  "description": "Cálculo de costos, precios y rentabilidad para compras de moda.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#F7F4F5",
+  "theme_color": "#A81F52",
+  "lang": "es",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
